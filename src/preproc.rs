@@ -421,6 +421,8 @@ impl<'a> Reductor<'a> {
 
             run! { arg_red };
 
+            run! { const_prop };
+
             let changed = run! { one_rhs };
             let changed = run! { one_lhs } || changed;
 
@@ -434,13 +436,6 @@ impl<'a> Reductor<'a> {
             }
 
             let changed = run! { fun_preds };
-
-            if changed {
-                changed_since_cfg_red = true;
-                continue;
-            }
-
-            let changed = run! { const_prop };
 
             if changed {
                 changed_since_cfg_red = true;
