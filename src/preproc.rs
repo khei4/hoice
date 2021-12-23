@@ -421,13 +421,6 @@ impl<'a> Reductor<'a> {
 
             run! { arg_red };
 
-            let changed = false;
-
-            if changed {
-                changed_since_cfg_red = true;
-                continue;
-            }
-
             let changed = run! { one_rhs };
             let changed = run! { one_lhs } || changed;
 
