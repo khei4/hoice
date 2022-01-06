@@ -139,7 +139,9 @@ pub fn read_and_work<R: ::std::io::Read>(
             .parse(&mut instance);
 
         line_off += lines_parsed;
-
+        //for (pred, id) in parser_cxt.pred_name_map.iter() {
+        //    println!("pred: {} {}", pred, id);
+        //}
         let parse_res = match parse_res {
             Ok(res) => res,
             Err(e) => {
@@ -198,6 +200,12 @@ pub fn read_and_work<R: ::std::io::Read>(
                     }
                 }
                 print_stats("top preproc", preproc_profiler);
+
+                // // ここでPreInstanceがほしい
+                // for (pred, _p) in instance.preds().index_iter() {
+                //     instance.write_pred_sig(&mut stdout(), pred);
+                // }
+                // std::process::exit(0);
 
                 model = if instance.simplify_clauses() {
                     if let Some(maybe_model) = instance.is_trivial_conj()? {
