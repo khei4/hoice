@@ -210,7 +210,13 @@ impl ConstProp {
             if self.implication_invariant_condition(instance, pred_idx)
                 && self.rhs_constant_condition(instance, pred_idx)
             {
-                const_conditions.extend(self.generate_constant_conditions(instance, pred_idx));
+                for (cls_idx, conds) in self.generate_constant_conditions(instance, pred_idx) {
+                    if let Some(prev_conds) = const_conditions.get_mut(&cls_idx) {
+                        prev_conds.extend(conds);
+                    } else {
+                        const_conditions.insert(cls_idx, conds);
+                    }
+                }
             }
         }
         let mut res = PrdHMap::new();
